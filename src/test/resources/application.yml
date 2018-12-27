@@ -1,0 +1,17 @@
+spring:
+  main:
+    banner-mode: 'OFF'
+logging:
+  #file: target/test.log
+  level: # one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF
+    root: ERROR
+    tech.simter.start.java.r2dbc: WARN
+
+    #org.springframework: WARN
+    #org.springframework.boot: WARN
+
+    #---- r2dbc ----#
+    io.r2dbc: WARN
+    io.r2dbc.postgresql.client.ReactorNettyClient: WARN # debug to show postgres request and Response
+    org.springframework.data.r2dbc: WARN
+    org.springframework.data.r2dbc.function.DefaultDatabaseClient: DEBUG # debug to show sql
