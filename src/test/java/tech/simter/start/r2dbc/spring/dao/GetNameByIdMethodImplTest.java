@@ -8,14 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 import tech.simter.start.r2dbc.po.Dream;
-import tech.simter.start.r2dbc.spring.R2dbcRepositoryConfiguration;
+import tech.simter.start.r2dbc.UnitTestConfiguration;
 
 import java.time.LocalDateTime;
 
 /**
  * @author RJ
  */
-@SpringBootTest(classes = R2dbcRepositoryConfiguration.class)
+@SpringBootTest(classes = UnitTestConfiguration.class)
 @ExtendWith(SpringExtension.class)
 class GetNameByIdMethodImplTest {
   @Autowired

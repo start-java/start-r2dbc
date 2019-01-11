@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
-import tech.simter.start.r2dbc.R2dbcConfiguration;
+import tech.simter.start.r2dbc.UnitTestConfiguration;
 import tech.simter.start.r2dbc.dao.DreamDao;
 import tech.simter.start.r2dbc.po.Dream;
 
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 /**
  * @author RJ
  */
-@SpringBootTest(classes = {DreamDaoImpl.class, R2dbcConfiguration.class})
+@SpringBootTest(classes = {UnitTestConfiguration.class})
 @ExtendWith(SpringExtension.class)
 class GetNameByIdMethodImplTest {
   @Autowired

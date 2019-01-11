@@ -1,24 +1,26 @@
-package tech.simter.start.r2dbc.spring;
+package tech.simter.start.r2dbc;
 
 import io.r2dbc.spi.ConnectionFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
-import tech.simter.start.r2dbc.ConnectionFactoryConfiguration;
 
 /**
  * @author RJ
  */
 @Configuration
 @EnableR2dbcRepositories
-@Import(ConnectionFactoryConfiguration.class)
-@ComponentScan("tech.simter.start.r2dbc.spring")
-public class R2dbcRepositoryConfiguration extends AbstractR2dbcConfiguration {
+@EnableConfigurationProperties
+@ComponentScan({
+  "tech.simter.start.r2dbc",
+  "tech.simter.r2dbc" // auto generate connectionFactory bean by maven dependency
+})
+public class UnitTestConfiguration extends AbstractR2dbcConfiguration {
   private final ConnectionFactory connectionFactory;
 
-  public R2dbcRepositoryConfiguration(ConnectionFactory connectionFactory) {
+  public UnitTestConfiguration(ConnectionFactory connectionFactory) {
     this.connectionFactory = connectionFactory;
   }
 
