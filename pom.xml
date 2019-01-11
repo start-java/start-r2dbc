@@ -32,9 +32,9 @@
     <mockito.version>2.23.4</mockito.version>
 
     <!-- database -->
-    <db.database>test</db.database>
+    <db.name>test_r2dbc</db.name>
     <db.host>localhost</db.host>
-    <db.user>test</db.user>
+    <db.username>test</db.username>
     <db.password>password</db.password>
   </properties>
   <dependencyManagement>
@@ -64,6 +64,12 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <dependency>
+      <groupId>tech.simter</groupId>
+      <artifactId>simter-r2dbc-ext</artifactId>
+      <version>1.1.0</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-r2dbc</artifactId>
@@ -184,35 +190,31 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.1</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <delimiters>
+            <!-- make yml file support maven properties (by @...@)-->
+            <delimiter>@</delimiter>
+          </delimiters>
+          <useDefaultDelimiters>false</useDefaultDelimiters>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <profiles>
     <!-- database -->
     <profile>
-      <id>postgres</id>
+      <id>h2</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
-      <dependencies>
-        <dependency>
-          <groupId>io.r2dbc</groupId>
-          <artifactId>r2dbc-postgresql</artifactId>
-          <version>${r2dbc.version}</version>
-          <scope>runtime</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>42.2.5</version>
-          <scope>runtime</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
-      <id>h2</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
+      <properties>
+        <db.platform>h2</db.platform>
+        <db.port>~</db.port>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>io.r2dbc</groupId>
@@ -229,21 +231,37 @@
       </dependencies>
     </profile>
     <profile>
+      <id>postgres</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <db.platform>postgres</db.platform>
+        <db.port>5432</db.port>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>io.r2dbc</groupId>
+          <artifactId>r2dbc-postgresql</artifactId>
+          <version>${r2dbc.version}</version>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>mssql</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <db.platform>mssql</db.platform>
+        <db.port>1234</db.port>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>io.r2dbc</groupId>
           <artifactId>r2dbc-mssql</artifactId>
           <version>${r2dbc.version}</version>
-          <scope>runtime</scope>
-        </dependency>
-        <dependency>
-          <groupId>com.microsoft.sqlserver</groupId>
-          <artifactId>mssql-jdbc</artifactId>
-          <version>7.1.3.jre8-preview</version>
           <scope>runtime</scope>
         </dependency>
       </dependencies>

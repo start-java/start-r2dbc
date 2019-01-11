@@ -1,17 +1,29 @@
 spring:
   main:
-    banner-mode: 'OFF'
+    banner-mode: 'off'
+  datasource:
+    initialization-mode: always # embedded|always|never
+    url: ./target/@db.name@   # for h2
+    name: @db.name@           # database-name for postgres, mssql
+    port: @db.port@
+    username: @db.username@
+    password: @db.password@
+    schema: # available when initialization-mode=always
+      - classpath:sql/@db.platform@/schema.sql
 logging:
   #file: target/test.log
   level: # one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF
     root: ERROR
-    tech.simter.start.java.r2dbc: WARN
+    #---- simter ----#
+    tech.simter.r2dbc: DEBUG
+    tech.simter.start.r2dbc: DEBUG
 
     #org.springframework: WARN
     #org.springframework.boot: WARN
 
     #---- r2dbc ----#
     io.r2dbc: WARN
-    io.r2dbc.postgresql.client.ReactorNettyClient: WARN # debug to show postgres request and Response
+    io.r2dbc.h2.client.SessionClient: DEBUG # DEBUG to show h2 request and Response
+    io.r2dbc.postgresql.client.ReactorNettyClient: DEBUG # DEBUG to show postgres request and Response
     org.springframework.data.r2dbc: WARN
-    org.springframework.data.r2dbc.function.DefaultDatabaseClient: DEBUG # debug to show sql
+    org.springframework.data.r2dbc.function.DefaultDatabaseClient: DEBUG # DEBUG to show sql
