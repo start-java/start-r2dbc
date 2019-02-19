@@ -14,8 +14,8 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 @EnableR2dbcRepositories
 @EnableConfigurationProperties
 @ComponentScan({
-  "tech.simter.start.r2dbc",
-  "tech.simter.r2dbc" // auto generate connectionFactory bean by maven dependency
+  "tech.simter.start.r2dbc", // this module
+  "tech.simter.r2dbc" // auto generate connectionFactory bean by maven dependency (from simter-r2dbc-ext)
 })
 public class UnitTestConfiguration extends AbstractR2dbcConfiguration {
   private final ConnectionFactory connectionFactory;
