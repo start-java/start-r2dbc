@@ -7,7 +7,7 @@ import tech.simter.start.r2dbc.po.Dream;
  * @author RJ
  */
 public interface DreamDao {
-  Mono<Void> saveOne(Dream dream);
+  Mono<Void> create(Dream dream);
 
   Mono<Void> clean();
 

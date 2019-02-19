@@ -28,7 +28,7 @@ class GetNameByIdMethodImplTest {
   }
 
   private void save(Dream dream) {
-    StepVerifier.create(dao.saveOne(dream)).expectNextCount(0).verifyComplete();
+    StepVerifier.create(dao.create(dream)).expectNextCount(0).verifyComplete();
   }
 
   @Test

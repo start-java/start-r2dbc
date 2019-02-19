@@ -9,6 +9,8 @@ import reactor.core.publisher.Mono;
 import tech.simter.start.r2dbc.dao.DreamDao;
 import tech.simter.start.r2dbc.po.Dream;
 
+import java.sql.Timestamp;
+
 /**
  * @author RJ
  */
@@ -29,13 +31,14 @@ public class DreamDaoImpl implements DreamDao {
   }
 
   @Override
-  public Mono<Void> saveOne(Dream dream) {
+  public Mono<Void> create(Dream dream) {
     return this.connection()
       .flatMapMany(c ->
         c.createStatement("insert into dream(id, name, create_on) values($1, $2, $3)")
           .bind("$1", dream.getId())
           .bind("$2", dream.getName())
-          .bind("$3", dream.getCreateOn())
+          // convert to Timestamp otherwise throw 'IllegalArgumentException: Cannot encode parameter of type java.time.LocalDateTime'
+          .bind("$3", Timestamp.valueOf(dream.getCreateOn()))
           .add()
           .execute()
       )
