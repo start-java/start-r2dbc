@@ -154,7 +154,7 @@ class ConnectionFactoryTest {
   }
 
   /**
-   * with r2dbc-1.0.0.M6 :
+   * with r2dbc-1.0.0.M6/M7 :
    * 1. postgres : run forever
    * 2. h2: not invoked
    */
@@ -173,7 +173,7 @@ class ConnectionFactoryTest {
         .flatMap(result -> result.map((row, rowMetadata) -> { // h2: not invoked because no rows
           logger.debug("result columns :");
           rowMetadata.getColumnMetadatas().forEach(c ->
-            logger.debug("  name={}, type={}, precision={}", c.getName(), c.getType(), c.getPrecision().orElse(-1))
+            logger.debug("  name={}, javaType={}, precision={}, scale={}", c.getName(), c.getJavaType(), c.getPrecision(), c.getScale())
           );
           return 1;
         }))

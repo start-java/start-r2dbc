@@ -19,7 +19,7 @@
     <spring-boot.version>2.1.1.RELEASE</spring-boot.version>
 
     <!-- r2dbc -->
-    <r2dbc.version>1.0.0.M6</r2dbc.version>
+    <r2dbc.version>1.0.0.M7</r2dbc.version>
 
     <!-- test -->
     <slf4j.version>1.7.25</slf4j.version>
