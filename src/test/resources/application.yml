@@ -9,8 +9,8 @@ spring:
     port: @db.port@
     username: @db.username@
     password: @db.password@
-    schema: # available when initialization-mode=always
-      - classpath:sql/@db.platform@/schema.sql
+    #schema: # available when initialization-mode=always
+    #  - classpath:sql/@db.platform@/schema.sql
 logging:
   #file: target/test.log
   level: # one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF
@@ -24,7 +24,7 @@ logging:
 
     #---- r2dbc ----#
     io.r2dbc: WARN
-    io.r2dbc.h2.client.SessionClient: DEBUG # DEBUG to show h2 request and Response
-    io.r2dbc.postgresql.client.ReactorNettyClient: DEBUG # DEBUG to show postgres request and Response
-    org.springframework.data.r2dbc: WARN
-    org.springframework.data.r2dbc.function.DefaultDatabaseClient: DEBUG # DEBUG to show sql
+    #io.r2dbc.h2.client.SessionClient: DEBUG # DEBUG to show h2 request and Response
+    #io.r2dbc.postgresql.client.ReactorNettyClient: DEBUG # DEBUG to show postgres request and Response
+    #org.springframework.data.r2dbc: WARN
+    #org.springframework.data.r2dbc.function.DefaultDatabaseClient: DEBUG # DEBUG to show sql
