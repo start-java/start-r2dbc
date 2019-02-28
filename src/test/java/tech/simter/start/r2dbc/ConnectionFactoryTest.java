@@ -153,6 +153,15 @@ class ConnectionFactoryTest {
     ).expectNext(1).verifyComplete();
   }
 
+  @Test
+  void insertOneAndDoResultMapWithoutBind() {
+    StepVerifier.create(
+      connection(cache)
+        .flatMapMany(c -> c.createStatement("insert into T(id) values(9)").execute())
+        .flatMap(result -> result.map((row, rowMetadata) -> 1))
+    ).verifyComplete();
+  }
+
   /**
    * with r2dbc-1.0.0.M6/M7 :
    * 1. postgres : run forever
@@ -160,23 +169,11 @@ class ConnectionFactoryTest {
    */
   @Test
   @Disabled("postgres will run forever")
-  void insertOneAndDoResultMap() {
-    int id = nextId();
-    String sql = "insert into T(id) values($1)";
+  void insertOneAndDoResultMapWithBind() {
     StepVerifier.create(
       connection(cache)
-        .flatMapMany(c ->
-          c.createStatement(sql)
-            .bind("$1", id)
-            .execute()
-        )
-        .flatMap(result -> result.map((row, rowMetadata) -> { // h2: not invoked because no rows
-          logger.debug("result columns :");
-          rowMetadata.getColumnMetadatas().forEach(c ->
-            logger.debug("  name={}, javaType={}, precision={}, scale={}", c.getName(), c.getJavaType(), c.getPrecision(), c.getScale())
-          );
-          return 1;
-        }))
+        .flatMapMany(c -> c.createStatement("insert into T(id) values($1)").bind("$1", 9).execute())
+        .flatMap(result -> result.map((row, rowMetadata) -> 1))
     ).verifyComplete();
   }
 
