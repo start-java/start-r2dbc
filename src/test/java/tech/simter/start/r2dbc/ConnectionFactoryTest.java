@@ -288,6 +288,8 @@ class ConnectionFactoryTest {
   }
 
   /**
+   * r2dbc-1.0.0.M7 fixed.
+   * <p>
    * with r2dbc-1.0.0.M6 :
    * 1. postgres : failed (expected: onNext(101); actual: onError(java.lang.UnsupportedOperationException: Binding parameters is not supported for the statement 'select id from T
    * where id in ($1, $2)
