@@ -4,6 +4,7 @@ spring:
   datasource:
     initialization-mode: always # embedded|always|never
     url: ./target/@db.name@   # for h2
+    host: @db.host@           # for postgres, mssql
     name: @db.name@           # database-name for postgres, mssql
     port: @db.port@
     username: @db.username@
