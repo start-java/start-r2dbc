@@ -322,4 +322,29 @@ class ConnectionFactoryTest {
         .flatMap(result -> result.map((row, metadata) -> row.get("id", Integer.class)))
     ).expectNext(ids[0]).expectNext(ids[1]).verifyComplete();
   }
+
+  @Test
+  void selectWithAlias() {
+    // insert test data
+    int[] ids = new int[]{nextId(), nextId()};
+    StepVerifier.create(
+      connection(cache)
+        .flatMapMany(c -> c.createStatement("insert into T(id) values($1), ($2)")
+          .bind("$1", ids[0])
+          .bind("$2", ids[1])
+          .execute())
+        .flatMap(Result::getRowsUpdated)
+    ).expectNext(2).verifyComplete();
+
+    // select them
+    String sql = "select id as my_id from T where id in ($1, $2) order by id asc";
+    StepVerifier.create(
+      connection(cache)
+        .flatMapMany(c -> c.createStatement(sql)
+          .bind("$1", ids[0])
+          .bind("$2", ids[1])
+          .execute())
+        .flatMap(result -> result.map((row, metadata) -> row.get("my_id", Integer.class)))
+    ).expectNext(ids[0]).expectNext(ids[1]).verifyComplete();
+  }
 }
