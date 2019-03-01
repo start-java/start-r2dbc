@@ -242,6 +242,11 @@ class ConnectionFactoryTest {
   }
 
   /**
+   * with r2dbc-1.0.0.M7 :
+   * 1. postgres : failed (expected: onNext(1); actual: onError(java.lang.IllegalArgumentException: Statement 'insert into T(id) values($1);
+   * insert into T(id) values($2), ($3);' cannot be created. This is often due to the presence of both multiple statements and parameters at the same time.))
+   * 2. h2: failed (expected: onNext(1); actual: onError(java.lang.ArrayIndexOutOfBoundsException: 3))
+   *
    * with r2dbc-1.0.0.M6 :
    * 1. postgres : failed (expected: onNext(1); actual: onError(java.lang.UnsupportedOperationException: Binding parameters is not supported for the statement 'insert into T(id) values($1);
    * insert into T(id) values($2), ($3);'))
