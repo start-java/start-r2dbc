@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 @SpringBootTest(classes = ConnectionFactoryConfiguration.class)
 @ExtendWith(SpringExtension.class)
 @TestInstance(PER_CLASS)
-class AbstractSpiTest {
+public class AbstractSpiTest {
   private Logger logger = LoggerFactory.getLogger(AbstractSpiTest.class);
   @Autowired
   private ConnectionFactory connectionFactory;
@@ -55,7 +55,7 @@ class AbstractSpiTest {
   }
 
   @BeforeAll
-  void setup() {
+  protected void setup() {
     logger.warn("Connection will {}be reused for all test method.", isCache() ? "" : "not ");
     // create test table
     StepVerifier.create(
@@ -71,7 +71,7 @@ class AbstractSpiTest {
   }
 
   @AfterAll
-  void release() {
+  protected void release() {
     // drop test table
     StepVerifier.create(
       connection()

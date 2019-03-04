@@ -9,7 +9,7 @@ public class TestUtils {
   /**
    * Generate a new id.
    */
-  public static int nextId() {
+  public static Integer nextId() {
     return ++id;
   }
 }
