@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 public class AbstractSpiTest {
   private Logger logger = LoggerFactory.getLogger(AbstractSpiTest.class);
   @Autowired
-  private ConnectionFactory connectionFactory;
+  protected ConnectionFactory connectionFactory;
 
   protected boolean isCache() {
     return true;
