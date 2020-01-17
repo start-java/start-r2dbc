@@ -9,9 +9,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 import tech.simter.start.springdatar2dbc.People;
 import tech.simter.start.springdatar2dbc.PeopleRepository;
+import tech.simter.start.springdatar2dbc.Status;
 import tech.simter.start.springdatar2dbc.UnitTestConfiguration;
 
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author RJ
@@ -29,17 +33,29 @@ class SaveMethodImplTest {
 
   @Test
   void test() {
-    // save it
+    // prepare data
     People po = new People();
     po.setId(UUID.randomUUID().toString());
     po.setName("simter");
-    StepVerifier.create(repository.save(po))
-      .expectNext(po)
+    po.setStatus(Status.Enabled);
+
+    // save it
+    repository.save(po)
+      .as(StepVerifier::create)
+      .assertNext(p -> {
+        assertEquals(p.getId(), po.getId());
+        assertEquals(p.getName(), po.getName());
+      })
       .verifyComplete();
 
     // verify saved
-    StepVerifier.create(repository.findById(po.getId()))
-      .expectNext(po)
+    assertNotNull(po.getId());
+    repository.findById(po.getId())
+      .as(StepVerifier::create)
+      .assertNext(p -> {
+        assertEquals(p.getId(), po.getId());
+        assertEquals(p.getName(), po.getName());
+      })
       .verifyComplete();
   }
 }
