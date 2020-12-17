@@ -101,11 +101,11 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
-    <dependency>
+    <!--<dependency>
       <groupId>tech.simter</groupId>
       <artifactId>simter-r2dbc-ext</artifactId>
       <version>1.4.0-M2</version>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-r2dbc</artifactId>
